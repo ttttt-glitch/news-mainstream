@@ -32,6 +32,7 @@ const postSchema = {
 export default defineConfig({
   name: 'default',
   title: 'News Backend',
+  basePath: `/studio`,
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'gasfh4gg',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
