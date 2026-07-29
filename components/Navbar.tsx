@@ -1,4 +1,5 @@
 'use client';
+import LanguageToggle from '@/components/LanguageToggle'; // update path if needed
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -40,6 +41,7 @@ export default function Navbar() {
 
           {/* Search & Mobile Toggle */}
           <div className="flex items-center space-x-4">
+            <LanguageToggle/>
             <button aria-label="Search" className="p-2 text-gray-600 hover:text-black">
               <Search className="w-5 h-5" />
             </button>

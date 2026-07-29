@@ -6,8 +6,8 @@ import { Post } from '@/types/news';
 
 export const revalidate = 60;
 
-async function getCategoryPosts(category: string) {
-  const query = `*[_type == "post" && category == $category] | order(publishedAt desc){
+async function getCategoryPosts(category: string, lang: string = 'en') {
+  const query = `*[_type == "post" && category == $category && language == $lang] | order(publishedAt desc){
     _id,
     title,
     slug,
@@ -16,7 +16,7 @@ async function getCategoryPosts(category: string) {
     publishedAt,
     author->{ name, image }
   }`;
-  return await sanityClient.fetch(query, { category });
+  return await sanityClient.fetch(query, { category, lang });
 }
 
 // Updated component signature to safely support Next.js 15 asynchronous routing parameters
