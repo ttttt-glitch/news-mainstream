@@ -19,14 +19,32 @@ async function getLatestPosts() {
   return await sanityClient.fetch(query);
 }
 
+async function getVideos() {
+  const query = `*[_type == "videoPost"] | order(publishedAt desc)[0...2]{
+    _id,
+    title,
+    youtubeUrl,
+    publishedAt
+  }`;
+  return await sanityClient.fetch(query);
+}
+
+function getYouTubeEmbedUrl(url: string) {
+  if (!url) return '';
+  const regExp = /^.(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
+}
+
 export default async function HomePage() {
   const posts = await getLatestPosts();
+  const videos = await getVideos(); // Fetching your dynamic videos here
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-950 font-sans">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         <header className="border-b border-gray-300 pb-4">
           <h1 className="font-serif text-4xl font-extrabold text-gray-900 mt-1">
             Latest News
@@ -67,6 +85,42 @@ export default async function HomePage() {
             ))}
           </div>
         )}
+
+        {/* --- RECENT VIDEO STORIES SECTION --- */}
+        <section className="mt-16 pt-8 border-t border-gray-300">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold font-serif text-gray-900 border-b-4 border-blue-600 inline-block pb-1">
+              Recent Video Stories
+            </h2>
+          </div>
+
+          {videos.length === 0 ? (
+            <p className="text-gray-600">No video stories published yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {videos.map((video: any) => (
+                <div key={video._id} className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                  <iframe 
+                    className="w-full h-64"
+                    src={getYouTubeEmbedUrl(video.youtubeUrl)} 
+                    title={video.title}
+                    allowFullScreen
+                  ></iframe>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg text-gray-800 font-serif">
+                      {video.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {new Date(video.publishedAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+        {/* --- END OF VIDEO SECTION --- */}
+
       </main>
     </div>
   );

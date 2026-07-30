@@ -36,6 +36,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   if (!article) {
     notFound();
   }
+  
 
   const recommended = await getRecommended(article.category, article.slug.current);
 

@@ -12,6 +12,26 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+  name: 'titleEn',
+  title: 'Title (English)',
+  type: 'string',
+}),
+defineField({
+  name: 'titleSo',
+  title: 'Title (Somali)',
+  type: 'string',
+}),
+defineField({
+  name: 'bodyEn',
+  title: 'Body (English)',
+  type: 'blockContent',
+}),
+defineField({
+  name: 'bodySo',
+  title: 'Body (Somali)',
+  type: 'blockContent',
+}),
+    defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
