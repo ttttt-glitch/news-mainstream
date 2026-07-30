@@ -7,7 +7,7 @@ import { Post } from '@/types/news';
 export const revalidate = 60;
 
 async function getCategoryPosts(category: string, lang: string = 'en') {
-  const query = `*[_type == "post" && category->slug.current == $category && language == $lang] | order(publishedAt desc){
+  const query = `*[_type == "post" && category->slug.current == $category] | order(publishedAt desc){
     _id,
     title,
     slug,
