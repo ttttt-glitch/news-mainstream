@@ -1,8 +1,10 @@
 import { type SchemaTypeDefinition } from 'sanity';
-import video from '../schemas/video'; // Points up one folder and into schemas/video.ts
+import post from '../schemas/post';
+import video from '../schemas/video';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    post,
     video,
   ],
 };
