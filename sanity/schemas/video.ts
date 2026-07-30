@@ -1,5 +1,5 @@
 export default {
-  name: 'videoPost',
+  name: 'video',
   title: 'Video Stories',
   type: 'document',
   fields: [
