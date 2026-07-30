@@ -56,9 +56,9 @@ export default defineType({
       options: {
         list: [
           { title: 'Tech', value: 'tech' },
-          { title: 'Business', value: 'business' },
-          { title: 'Sports', value: 'sports' },
-          { title: 'World', value: 'world' },
+          { title: 'Business', value: 'BUSINESS' },
+          { title: 'Sports', value: 'SPORTS' },
+          { title: 'World', value: 'WORLD' },
         ],
       },
       validation: (Rule) => Rule.required(),
