@@ -36,7 +36,7 @@ function getYouTubeEmbedUrl(url: string) {
   // ✅ IMPROVED: Better YouTube URL extraction
   const regExp = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
   const match = url.match(regExp);
-  return match ? https://www.youtube.com/embed/${match[1]} : '';
+  return match ? `https://www.youtube.com/embed/${match[1]}` : '';
 }
 
 export default async function HomePage() {
