@@ -20,7 +20,8 @@ async function getLatestPosts() {
 }
 
 async function getVideos() {
-  const query = `*[_type == "videoPost"] | order(publishedAt desc)[0...2]{
+  // ✅ FIXED: Changed from "videoPost" to "video"
+  const query = `*[_type == "video"] | order(publishedAt desc)[0...2]{
     _id,
     title,
     youtubeUrl,
@@ -31,14 +32,16 @@ async function getVideos() {
 
 function getYouTubeEmbedUrl(url: string) {
   if (!url) return '';
-  const regExp = /^.(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]).*/;
+  
+  // ✅ IMPROVED: Better YouTube URL extraction
+  const regExp = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
   const match = url.match(regExp);
-  return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : '';
+  return match ? https://www.youtube.com/embed/${match[1]} : '';
 }
 
 export default async function HomePage() {
   const posts = await getLatestPosts();
-  const videos = await getVideos(); // Fetching your dynamic videos here
+  const videos = await getVideos();
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-950 font-sans">
@@ -100,18 +103,25 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {videos.map((video: any) => (
                 <div key={video._id} className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200">
-                  <iframe 
-                    className="w-full h-64"
-                    src={getYouTubeEmbedUrl(video.youtubeUrl)} 
-                    title={video.title}
-                    allowFullScreen
-                  ></iframe>
+                  {video.youtubeUrl ? (
+                    <iframe 
+                      className="w-full h-64"
+                      src={getYouTubeEmbedUrl(video.youtubeUrl)} 
+                      title={video.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">No video URL provided</span>
+                    </div>
+                  )}
                   <div className="p-4">
                     <h3 className="font-bold text-lg text-gray-800 font-serif">
-                      {video.title}
+                      {video.title || 'Untitled Video'}
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">
-                      {new Date(video.publishedAt).toLocaleDateString()}
+                      {video.publishedAt ? new Date(video.publishedAt).toLocaleDateString() : 'No date'}
                     </p>
                   </div>
                 </div>

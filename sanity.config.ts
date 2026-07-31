@@ -1,7 +1,8 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import video from './sanity/schemas/video'; // ✅ Import video schema
 
-// 1. We define a quick inline news schema right here to guarantee it renders in the UI
+// Keep your existing post schema
 const postSchema = {
   name: 'post',
   title: 'News Post',
@@ -32,7 +33,7 @@ const postSchema = {
 export default defineConfig({
   name: 'default',
   title: 'News Backend',
-  basePath: `/studio`,
+  basePath: '/studio',
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'gasfh4gg',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
@@ -40,6 +41,6 @@ export default defineConfig({
   plugins: [structureTool()],
 
   schema: {
-    types: [postSchema], // 2. This array must contain the schema layout for buttons to show up!
+    types: [postSchema, video], // ✅ ADDED video here
   },
 });

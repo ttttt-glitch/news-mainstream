@@ -1,3 +1,4 @@
+console.log('VIDEO SCHEMA LOADED');
 export default {
   name: 'video',
   title: 'Video Stories',
