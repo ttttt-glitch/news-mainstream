@@ -20,7 +20,6 @@ async function getLatestPosts() {
 }
 
 async function getVideos() {
-  // ✅ FIXED: Changed from "videoPost" to "video"
   const query = `*[_type == "video"] | order(publishedAt desc)[0...2]{
     _id,
     title,
@@ -32,11 +31,9 @@ async function getVideos() {
 
 function getYouTubeEmbedUrl(url: string) {
   if (!url) return '';
-  
-  // ✅ IMPROVED: Better YouTube URL extraction
   const regExp = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
   const match = url.match(regExp);
-  return match ? `https://www.youtube.com/embed/${match[1]}` : '';
+  return match ? https://www.youtube.com/embed/${match[1]} : '';
 }
 
 export default async function HomePage() {
@@ -45,7 +42,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-950 font-sans">
-      <Navbar />
+      <Navbar posts={posts} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         <header className="border-b border-gray-300 pb-4">

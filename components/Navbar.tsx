@@ -1,9 +1,11 @@
 'use client';
-import LanguageToggle from '@/components/LanguageToggle'; // update path if needed
 
 import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X, Search } from 'lucide-react';
+import LanguageToggle from '@/components/LanguageToggle';
+import LiveSearch from '@/components/LiveSearch';
+import { Post } from '@/types/news';
 
 const categories = [
   { name: 'Tech', slug: 'tech' },
@@ -12,8 +14,13 @@ const categories = [
   { name: 'World', slug: 'world' },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  posts?: Post[]; // Make it optional so it works without passing posts
+}
+
+export default function Navbar({ posts = [] }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -41,10 +48,22 @@ export default function Navbar() {
 
           {/* Search & Mobile Toggle */}
           <div className="flex items-center space-x-4">
-            <LanguageToggle/>
-            <button aria-label="Search" className="p-2 text-gray-600 hover:text-black">
+            {/* Desktop Search Bar */}
+            <div className="hidden md:block">
+              <LiveSearch allPosts={posts} />
+            </div>
+
+            {/* Mobile Search Toggle Button */}
+            <button
+              onClick={() => setShowSearch(!showSearch)}
+              aria-label="Search"
+              className="md:hidden p-2 text-gray-600 hover:text-black"
+            >
               <Search className="w-5 h-5" />
             </button>
+
+            <LanguageToggle />
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle Menu"
@@ -54,6 +73,13 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Search Bar (toggles open) */}
+        {showSearch && (
+          <div className="md:hidden py-3 border-t border-gray-100">
+            <LiveSearch allPosts={posts} />
+          </div>
+        )}
       </div>
 
       {/* Mobile Menu */}
