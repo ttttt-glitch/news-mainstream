@@ -13,8 +13,8 @@ export default function SocialShare({ title, url }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
 
   const shareData = {
-    facebook: `https://facebook.com{encodeURIComponent(url)}`,
-    whatsapp: `https://whatsapp.com{encodeURIComponent(title + '\n' + url)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(title + '\n' + url)}`,
     twitter: `https://twitter.com{encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
     telegram: `https://t.me{encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
   };
