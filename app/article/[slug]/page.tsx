@@ -86,7 +86,7 @@ export default async function ArticlePage({
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-12 max-w-4xl mx-auto">
         {/* Article Header with Share Button */}
         <header className="space-y-4 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">

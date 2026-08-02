@@ -44,7 +44,7 @@ export default async function HomePage() {
     <div className="min-h-screen bg-gray-50 text-gray-950 font-sans">
       <Navbar posts={posts} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <main  className="w-full px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         <header className="border-b border-gray-300 pb-4">
           <h1 className="font-serif text-4xl font-extrabold text-gray-900 mt-1">
             Latest News
