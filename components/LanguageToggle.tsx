@@ -11,18 +11,20 @@ export default function LanguageToggle() {
   };
 
   return (
-    <div className="flex bg-slate-800 rounded-md overflow-hidden text-sm font-medium text-white">
+    <div className="flex bg-slate-800 rounded-md overflow-hidden text-sm font-medium text-white flex-shrink-0">
       <button
         onClick={() => switchLanguage('en')}
         className={`px-3 py-1 ${currentLang === 'en' ? 'bg-blue-600' : 'bg-transparent'}`}
       >
-        English
+        <span className="sm:hidden">EN</span>
+        <span className="hidden sm:inline">English</span>
       </button>
       <button
         onClick={() => switchLanguage('so')}
         className={`px-3 py-1 ${currentLang === 'so' ? 'bg-blue-600' : 'bg-transparent'}`}
       >
-        Somali
+        <span className="sm:hidden">SO</span>
+        <span className="hidden sm:inline">Somali</span>
       </button>
     </div>
   );
